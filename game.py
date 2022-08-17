@@ -1,4 +1,4 @@
-class Connect4Board:
+class Board:
   def __init__(self, width, height):
     self.width = width
     self.height = height
@@ -29,7 +29,7 @@ class Connect4Board:
     self.attempt_move(piece, column)
 
 # TESTS
-test = Connect4Board(3, 3)
+test = Board(3, 3)
 
 # Ordinary piece placement works
 test.move('x', 1)
