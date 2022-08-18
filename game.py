@@ -28,8 +28,16 @@ class Board:
     if not column in range(1, self.width+1): return print('Error: {} is not a valid column'.format(column))
     self.attempt_move(piece, column)
 
+class Game:
+  def __init__(self, width, height):
+    self.board = Board(width, height)
+
+  def move(self, piece, column):
+    self.board.move(piece, column)
+
+
 # TESTS
-test = Board(3, 3)
+test = Game(3, 3)
 
 # Ordinary piece placement works
 test.move('x', 1)
@@ -48,4 +56,4 @@ test.move('x', 0)
 test.move('x', 4)
 test.move('x', 2.5)
 
-print(all(' '))
+# print(all(' '))
