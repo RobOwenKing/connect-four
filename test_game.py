@@ -17,3 +17,20 @@ class TestBoard(TestCase):
             board = game.Board(3, 2)
             board.print()
             self.assertEqual(output.getvalue(), " 1 2 3\n| | | |\n| | | |\n")
+
+    def test_single_move(self):
+        with StringIO() as output, redirect_stdout(output):
+            board = game.Board(3, 3)
+            board.move("x", 1)
+            board.print()
+            self.assertEqual(output.getvalue(), " 1 2 3\n| | | |\n| | | |\n|x| | |\n")
+
+    def test_multiple_moves(self):
+        with StringIO() as output, redirect_stdout(output):
+            board = game.Board(3, 3)
+            board.move("x", 1)
+            board.move("o", 1)
+            board.move("x", 1)
+            board.move("o", 2)
+            board.print()
+            self.assertEqual(output.getvalue(), " 1 2 3\n|x| | |\n|o| | |\n|x|o| |\n")
