@@ -34,3 +34,10 @@ class TestBoard(TestCase):
             board.move("o", 2)
             board.print()
             self.assertEqual(output.getvalue(), " 1 2 3\n|x| | |\n|o| | |\n|x|o| |\n")
+
+    def test_full_column_error(self):
+        board = game.Board(3, 2)
+        board.move("x", 1)
+        board.move("o", 1)
+        with self.assertRaises(ValueError):
+            board.move("x", 1)
