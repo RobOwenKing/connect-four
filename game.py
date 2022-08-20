@@ -19,7 +19,7 @@ class Board:
         for j in range(self.height - 1, -1, -1):
             if self.board[j][column - 1] == " ":
                 self.board[j][column - 1] = piece
-                self.print()
+                """ self.print() """
                 return
         print("Error: Column {} is already full".format(column))
 
