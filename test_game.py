@@ -41,3 +41,8 @@ class TestBoard(TestCase):
         board.move("o", 1)
         with self.assertRaises(ValueError):
             board.move("x", 1)
+
+    def test_invalid_piece(self):
+        board = game.Board(2, 2)
+        with self.assertRaises(ValueError):
+            board.move("a", 1)
