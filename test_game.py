@@ -46,3 +46,12 @@ class TestBoard(TestCase):
         board = game.Board(2, 2)
         with self.assertRaises(ValueError):
             board.move("a", 1)
+
+    def test_invalid_column(self):
+        board = game.Board(2, 2)
+        with self.assertRaises(ValueError):
+            board.move("x", 0)
+        with self.assertRaises(ValueError):
+            board.move("x", 3)
+        with self.assertRaises(ValueError):
+            board.move("x", 1.5)
