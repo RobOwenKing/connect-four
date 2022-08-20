@@ -39,6 +39,7 @@ class Game:
         self.board.move(piece, column)
 
 
+"""
 # TESTS
 test = Game(3, 3)
 
@@ -60,3 +61,4 @@ test.move("x", 4)
 test.move("x", 2.5)
 
 # print(all(' '))
+ """
