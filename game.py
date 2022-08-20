@@ -20,14 +20,14 @@ class Board:
             if self.board[j][column - 1] == " ":
                 self.board[j][column - 1] = piece
                 """ self.print() """
-                return
-        print("Error: Column {} is already full".format(column))
+                return True
+        raise ValueError("Error: Column {} is already full".format(column))
 
     def move(self, piece, column):
         if not piece in self.players:
-            return print("Error: {} is not a valid piece".format(piece))
+            raise ValueError("Error: {} is not a valid piece".format(piece))
         if not column in range(1, self.width + 1):
-            return print("Error: {} is not a valid column".format(column))
+            raise ValueError("Error: {} is not a valid column".format(column))
         self.attempt_move(piece, column)
 
 
