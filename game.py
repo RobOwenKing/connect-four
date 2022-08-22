@@ -37,28 +37,3 @@ class Game:
 
     def move(self, piece, column):
         self.board.move(piece, column)
-
-
-"""
-# TESTS
-test = Game(3, 3)
-
-# Ordinary piece placement works
-test.move("x", 1)
-test.move("o", 1)
-test.move("x", 1)
-test.move("o", 2)
-
-# Trying to play in a full column gives an error
-test.move("x", 1)
-
-# Trying to play an invalid piece gives an error
-test.move("a", 2)
-
-# Trying to play an invalid column gives an error
-test.move("x", 0)
-test.move("x", 4)
-test.move("x", 2.5)
-
-# print(all(' '))
- """
