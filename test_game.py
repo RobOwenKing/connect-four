@@ -24,6 +24,18 @@ class TestBoard(TestCase):
                 " 1 2 3 4 5\n| | | | | |\n| | | | | |\n| | | | | |\n| | | | | |\n",
             )
 
+    def test_invalid_board_width(self):
+        with self.assertRaises(ValueError):
+            board = game.Board(3, 4)
+        with self.assertRaises(ValueError):
+            board = game.Board(4.5, 4)
+        with self.assertRaises(ValueError):
+            board = game.Board("a", 4)
+
+    def test_invalid_board_height(self):
+        with self.assertRaises(ValueError):
+            board = game.Board(4, 3)
+
     def test_single_move(self):
         with StringIO() as output, redirect_stdout(output):
             board = game.Board(4, 4)
