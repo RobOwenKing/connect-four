@@ -15,6 +15,15 @@ class TestBoard(TestCase):
                 " 1 2 3 4\n| | | | |\n| | | | |\n| | | | |\n| | | | |\n| | | | |\n",
             )
 
+    def test_float_dimension(self):
+        with StringIO() as output, redirect_stdout(output):
+            board = game.Board(4.5, 5)
+            board.print()
+            self.assertEqual(
+                output.getvalue(),
+                " 1 2 3 4\n| | | | |\n| | | | |\n| | | | |\n| | | | |\n| | | | |\n",
+            )
+
     def test_init_wide_board(self):
         with StringIO() as output, redirect_stdout(output):
             board = game.Board(5, 4)
@@ -27,8 +36,6 @@ class TestBoard(TestCase):
     def test_invalid_board_width(self):
         with self.assertRaises(ValueError):
             board = game.Board(3, 4)
-        with self.assertRaises(ValueError):
-            board = game.Board(4.5, 4)
         with self.assertRaises(ValueError):
             board = game.Board("a", 4)
 
