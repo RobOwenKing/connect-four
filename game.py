@@ -3,14 +3,14 @@ from json.encoder import INFINITY
 
 class Board:
     def __init__(self, width, height):
-        self.width = width
-        self.height = height
+        self.width = int(width)
+        self.height = int(height)
         self.board = []
         self.players = ["x", "o"]
 
-        for j in range(height):
+        for j in range(self.height):
             self.board.append([])
-            for i in range(width):
+            for i in range(self.width):
                 self.board[j].append(" ")
 
     def print(self):

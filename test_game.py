@@ -17,7 +17,7 @@ class TestBoard(TestCase):
 
     def test_float_dimension(self):
         with StringIO() as output, redirect_stdout(output):
-            board = game.Board(4.5, 5)
+            board = game.Board(4.6, 5)
             board.print()
             self.assertEqual(
                 output.getvalue(),
