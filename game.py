@@ -1,6 +1,3 @@
-from json.encoder import INFINITY
-
-
 class Board:
     def __init__(self, width, height):
         self.width = self.set_dimension(width)
