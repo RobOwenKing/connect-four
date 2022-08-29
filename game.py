@@ -3,8 +3,8 @@ from json.encoder import INFINITY
 
 class Board:
     def __init__(self, width, height):
-        self.width = int(width)
-        self.height = int(height)
+        self.width = self.set_dimension(width)
+        self.height = self.set_dimension(height)
         self.board = []
         self.players = ["x", "o"]
 
@@ -32,6 +32,15 @@ class Board:
         if not column in range(1, self.width + 1):
             raise ValueError("Error: {} is not a valid column".format(column))
         self.attempt_move(piece, column)
+
+    # Helper methods
+    def set_dimension(self, v):
+        try:
+            if v < 4:
+                raise ValueError("Error: Dimensions must be greater than 4x4")
+            return int(v)
+        except TypeError:
+            raise TypeError("Error: Dimensions must be integers")
 
 
 class Game:

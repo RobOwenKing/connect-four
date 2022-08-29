@@ -36,8 +36,8 @@ class TestBoard(TestCase):
     def test_invalid_board_width(self):
         with self.assertRaises(ValueError):
             board = game.Board(3, 4)
-        with self.assertRaises(ValueError):
-            board = game.Board("a", 4)
+        with self.assertRaises(TypeError):
+            board = game.Board("3", 4)
 
     def test_invalid_board_height(self):
         with self.assertRaises(ValueError):
