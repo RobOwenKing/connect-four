@@ -1,14 +1,9 @@
 class Board:
     def __init__(self, width, height):
-        self.width = self.set_dimension(width)
         self.height = self.set_dimension(height)
-        self.board = []
+        self.width = self.set_dimension(width)
+        self.board = self.create_board(self.height, self.width)
         self.players = ["x", "o"]
-
-        for j in range(self.height):
-            self.board.append([])
-            for i in range(self.width):
-                self.board[j].append(" ")
 
     def print(self):
         print(" " + " ".join([str(x) for x in range(1, self.width + 1)]))
@@ -31,6 +26,14 @@ class Board:
         self.attempt_move(piece, column)
 
     # Helper methods
+    def create_board(self, height, width):
+        board = []
+        for j in range(height):
+            board.append([])
+            for i in range(width):
+                board[j].append(" ")
+        return board
+
     def set_dimension(self, v):
         try:
             if v < 4:
