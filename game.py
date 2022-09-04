@@ -2,7 +2,7 @@ class Board:
     def __init__(self, width, height):
         self.height = self.set_dimension(height)
         self.width = self.set_dimension(width)
-        self.board = self.create_board(self.height, self.width)
+        self.board = [[" " for i in range(self.width)] for j in range(self.height)]
         self.players = ["x", "o"]
 
     def print(self):
@@ -26,14 +26,6 @@ class Board:
         self.attempt_move(piece, column)
 
     # Helper methods
-    def create_board(self, height, width):
-        board = []
-        for j in range(height):
-            board.append([])
-            for i in range(width):
-                board[j].append(" ")
-        return board
-
     def set_dimension(self, v):
         try:
             if v < 4:
