@@ -28,7 +28,7 @@ class Board:
     # Helper methods
     def set_dimension(self, v):
         try:
-            if v < 4:
+            if int(v) < 4:
                 raise ValueError("Error: Dimensions must be greater than 4x4")
             return int(v)
         except TypeError:
@@ -36,8 +36,26 @@ class Board:
 
 
 class Game:
-    def __init__(self, width, height):
+    def __init__(self, width=7, height=6):
         self.board = Board(width, height)
+        self.game_over = False
+        self.players = ["x", "o"]
+        self.current_player = 0
 
     def move(self, piece, column):
         self.board.move(piece, column)
+
+    def loop(self):
+        while not self.game_over:
+            col = input(
+                "Pick a column, player {}: ".format(self.players[self.current_player])
+            )
+            # self.handle_move(col)
+
+
+print("WELCOME TO CONNECT FOUR!")
+width = input("How many columns do you want (default 7): ")
+height = input("How many rows do you want (default 6): ")
+
+game = Game(width, height)
+game.loop()
