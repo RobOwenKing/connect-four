@@ -21,9 +21,9 @@ class Board:
     def move(self, piece, column):
         if not piece in self.players:
             raise ValueError("Error: {} is not a valid piece".format(piece))
-        if not column in range(1, self.width + 1):
+        if not int(column) in range(1, self.width + 1):
             raise ValueError("Error: {} is not a valid column".format(column))
-        self.attempt_move(piece, column)
+        self.attempt_move(piece, int(column))
 
     # Helper methods
     def set_dimension(self, v):
@@ -45,12 +45,21 @@ class Game:
     def move(self, piece, column):
         self.board.move(piece, column)
 
+    def handle_move(self, col):
+        try:
+            self.board.move(self.players[self.current_player], col)
+            self.board.print()
+            self.current_player = 1 - self.current_player
+        except Exception as e:
+            print(e)
+
     def loop(self):
+        self.board.print()
         while not self.game_over:
             col = input(
                 "Pick a column, player {}: ".format(self.players[self.current_player])
             )
-            # self.handle_move(col)
+            self.handle_move(col)
 
 
 print("WELCOME TO CONNECT FOUR!")
