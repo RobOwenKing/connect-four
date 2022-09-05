@@ -11,19 +11,19 @@ class Board:
         for row in self.board:
             print("|" + "".join([x + "|" for x in row]))
 
-    def is_won_vertically(self):
-        if self.height - self.last_placement[1] < 4:
+    def is_won_vertically(self, x, y, to_match):
+        if self.height - y < 4:
             return False
-        x = self.last_placement[0]
-        y = self.last_placement[1]
-        last_player = self.board[y][x]
-        if any([self.board[y + i][x] != last_player for i in range(4)]):
+        if to_match != "".join([self.board[y + i][x] for i in range(4)]):
             return False
-        print("Congrats, {}! You win!".format(last_player))
+        print("Congrats, {}! You win!".format(to_match[0]))
         return True
 
     def is_won(self):
-        if self.is_won_vertically():
+        x = self.last_placement[0]
+        y = self.last_placement[1]
+        to_match = self.board[y][x] * 4
+        if self.is_won_vertically(x, y, to_match):
             return True
 
     def is_draw(self):
