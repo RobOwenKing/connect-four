@@ -38,7 +38,6 @@ class Board:
     def is_won_p_diagonally(self, x, y, to_match):
         min_i = -min(x, self.height - y - 1)
         max_i = min(self.width - x, y + 1)
-        print([self.board[y - i][x + i] for i in range(min_i, max_i)])
         if to_match not in "".join(
             [self.board[y - i][x + i] for i in range(min_i, max_i)]
         ):
