@@ -11,8 +11,20 @@ class Board:
         for row in self.board:
             print("|" + "".join([x + "|" for x in row]))
 
+    def is_won_vertically(self):
+        if self.height - self.last_placement[1] < 4:
+            return False
+        x = self.last_placement[0]
+        y = self.last_placement[1]
+        last_player = self.board[y][x]
+        if any([self.board[y + i][x] != last_player for i in range(4)]):
+            return False
+        print("Congrats, {}! You win!".format(last_player))
+        return True
+
     def is_won(self):
-        print("Win!")
+        if self.is_won_vertically():
+            return True
 
     def is_draw(self):
         if all([s.strip() for s in self.board[0]]):
