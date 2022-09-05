@@ -25,14 +25,40 @@ class Board:
         print("Congrats, {}! You win!".format(to_match[0]))
         return True
 
+    def is_won_n_diagonally(self, x, y, to_match):
+        min_i = -min(x, y)
+        max_i = min(self.width - x, self.height - y)
+        if to_match not in "".join(
+            [self.board[y + i][x + i] for i in range(min_i, max_i)]
+        ):
+            return False
+        print("Congrats, {}! You win!".format(to_match[0]))
+        return True
+
+    def is_won_p_diagonally(self, x, y, to_match):
+        min_i = -min(x, self.height - y - 1)
+        max_i = min(self.width - x, y + 1)
+        print([self.board[y - i][x + i] for i in range(min_i, max_i)])
+        if to_match not in "".join(
+            [self.board[y - i][x + i] for i in range(min_i, max_i)]
+        ):
+            return False
+        print("Congrats, {}! You win!".format(to_match[0]))
+        return True
+
     def is_won(self):
         x = self.last_placement[0]
         y = self.last_placement[1]
         to_match = self.board[y][x] * 4
         if self.is_won_vertically(x, y, to_match):
             return True
-        if self.is_won_horizontally(y, to_match):
+        elif self.is_won_horizontally(y, to_match):
             return True
+        elif self.is_won_p_diagonally(x, y, to_match):
+            return True
+        elif self.is_won_n_diagonally(x, y, to_match):
+            return True
+        return False
 
     def is_draw(self):
         if all([s.strip() for s in self.board[0]]):
