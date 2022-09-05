@@ -99,7 +99,7 @@ class Board:
 
 
 class Game:
-    def __init__(self, width=7, height=6):
+    def __init__(self, width, height):
         self.board = Board(width, height)
         self.game_over = False
         self.players = ["x", "o"]
@@ -127,8 +127,8 @@ class Game:
 
 
 print("WELCOME TO CONNECT FOUR!")
-width = input("How many columns do you want (default 7): ")
-height = input("How many rows do you want (default 6): ")
+width = input("How many columns do you want (default 7): ") or 7
+height = input("How many rows do you want (default 6): ") or 6
 
 game = Game(width, height)
 game.loop()
