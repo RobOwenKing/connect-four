@@ -19,11 +19,19 @@ class Board:
         print("Congrats, {}! You win!".format(to_match[0]))
         return True
 
+    def is_won_horizontally(self, y, to_match):
+        if not to_match in "".join(self.board[y]):
+            return False
+        print("Congrats, {}! You win!".format(to_match[0]))
+        return True
+
     def is_won(self):
         x = self.last_placement[0]
         y = self.last_placement[1]
         to_match = self.board[y][x] * 4
         if self.is_won_vertically(x, y, to_match):
+            return True
+        if self.is_won_horizontally(y, to_match):
             return True
 
     def is_draw(self):
