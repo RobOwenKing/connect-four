@@ -104,6 +104,7 @@ class Game:
         self.game_over = False
         self.players = ["x", "o"]
         self.current_player = 0
+        self.play_again = True
 
     def move(self, piece, column):
         self.board.move(piece, column)
@@ -119,7 +120,8 @@ class Game:
 
     def start(self):
         print("WELCOME TO CONNECT FOUR!")
-        self.game_loop()
+        while self.play_again:
+            self.game_loop()
 
     def game_loop(self):
         width = input("How many columns do you want (default 7): ") or 7
