@@ -99,8 +99,8 @@ class Board:
 
 
 class Game:
-    def __init__(self, width, height):
-        self.board = Board(width, height)
+    def __init__(self):
+        self.board = Board(7, 6)
         self.game_over = False
         self.players = ["x", "o"]
         self.current_player = 0
@@ -117,8 +117,16 @@ class Game:
         except Exception as e:
             print(e)
 
-    def loop(self):
+    def start(self):
+        print("WELCOME TO CONNECT FOUR!")
+        self.game_loop()
+
+    def game_loop(self):
+        width = input("How many columns do you want (default 7): ") or 7
+        height = input("How many rows do you want (default 6): ") or 6
+        self.board = Board(width, height)
         self.board.print()
+        self.game_over = False
         while not self.game_over:
             col = input(
                 "Pick a column, player {}: ".format(self.players[self.current_player])
@@ -126,9 +134,5 @@ class Game:
             self.handle_move(col)
 
 
-print("WELCOME TO CONNECT FOUR!")
-width = input("How many columns do you want (default 7): ") or 7
-height = input("How many rows do you want (default 6): ") or 6
-
-game = Game(width, height)
-game.loop()
+game = Game()
+game.start()
