@@ -118,10 +118,15 @@ class Game:
         except Exception as e:
             print(e)
 
+    def ask_play_again(self):
+        unparsed_input = input("Would you like to play again (Y/n): ")
+        self.play_again = unparsed_input.lower() not in ["n", "no", "false"]
+
     def start(self):
         print("WELCOME TO CONNECT FOUR!")
         while self.play_again:
             self.game_loop()
+            self.ask_play_again()
 
     def game_loop(self):
         width = input("How many columns do you want (default 7): ") or 7
