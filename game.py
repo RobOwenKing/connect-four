@@ -45,7 +45,12 @@ class Board:
         x = self.last_placement[0]
         y = self.last_placement[1]
         to_match = self.board[y][x] * 4
-        if self.is_won_vertically(x, y, to_match) or self.is_won_horizontally(y, to_match) or self.is_won_p_diagonally(x, y, to_match) or self.is_won_n_diagonally(x, y, to_match):
+        if (
+            self.is_won_vertically(x, y, to_match)
+            or self.is_won_horizontally(y, to_match)
+            or self.is_won_p_diagonally(x, y, to_match)
+            or self.is_won_n_diagonally(x, y, to_match)
+        ):
             print("Congrats, {}! You win!".format(to_match[0]))
             return True
         return False
@@ -131,9 +136,11 @@ class Game:
             )
             self.handle_move(col)
 
+
 def main():
     game = Game()
     game.start()
+
 
 if __name__ == "__main__":
     main()
