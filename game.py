@@ -140,6 +140,9 @@ class Game:
             )
             self.handle_move(col)
 
+def main():
+    game = Game()
+    game.start()
 
-game = Game()
-game.start()
+if __name__ == "__main__":
+    main()
