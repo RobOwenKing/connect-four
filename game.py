@@ -21,8 +21,13 @@ class Board:
         return True
 
     def is_won_horizontally(self, y, to_match):
-        if not to_match in "".join(self.board[y]):
+        row = "".join(self.board[y])
+        if not to_match in row:
             return False
+        start = row.find(to_match)
+        for i in range(4):
+            self.board[y][start + i] = to_match[0].upper()
+        self.print()
         return True
 
     def is_won_n_diagonally(self, x, y, to_match):
