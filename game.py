@@ -11,38 +11,40 @@ class Board:
         for row in self.board:
             print("|" + "".join([x + "|" for x in row]))
 
-    def is_won_vertically(self, x, y, to_match):
-        if self.height - y < 4 or to_match != "".join(
+    def is_won_vertically(self, x, y, char_to_match, str_to_match):
+        if self.height - y < 4 or str_to_match != "".join(
             [self.board[y + i][x] for i in range(4)]
         ):
             return False
         for i in range(4):
-            self.board[y + i][x] = to_match[0].upper()
+            self.board[y + i][x] = char_to_match.upper()
         return True
 
-    def is_won_horizontally(self, y, to_match):
+    def is_won_horizontally(self, y, char_to_match, str_to_match):
         row = "".join(self.board[y])
-        if not to_match in row:
+        if not str_to_match in row:
             return False
-        start = row.find(to_match)
-        for i in range(4):
-            self.board[y][start + i] = to_match[0].upper()
+        start = row.find(str_to_match)
+        i = 0
+        while start + i < self.width and self.board[y][start + i] == char_to_match:
+            self.board[y][start + i] = char_to_match.upper()
+            i += 1
         self.print()
         return True
 
-    def is_won_n_diagonally(self, x, y, to_match):
+    def is_won_n_diagonally(self, x, y, char_to_match, str_to_match):
         min_i = -min(x, y)
         max_i = min(self.width - x, self.height - y)
-        if to_match not in "".join(
+        if str_to_match not in "".join(
             [self.board[y + i][x + i] for i in range(min_i, max_i)]
         ):
             return False
         return True
 
-    def is_won_p_diagonally(self, x, y, to_match):
+    def is_won_p_diagonally(self, x, y, char_to_match, str_to_match):
         min_i = -min(x, self.height - y - 1)
         max_i = min(self.width - x, y + 1)
-        if to_match not in "".join(
+        if str_to_match not in "".join(
             [self.board[y - i][x + i] for i in range(min_i, max_i)]
         ):
             return False
@@ -51,14 +53,15 @@ class Board:
     def is_won(self):
         x = self.last_placement[0]
         y = self.last_placement[1]
-        to_match = self.board[y][x] * 4
+        char_to_match = self.board[y][x]
+        str_to_match = char_to_match * 4
         if (
-            self.is_won_vertically(x, y, to_match)
-            or self.is_won_horizontally(y, to_match)
-            or self.is_won_p_diagonally(x, y, to_match)
-            or self.is_won_n_diagonally(x, y, to_match)
+            self.is_won_vertically(x, y, char_to_match, str_to_match)
+            or self.is_won_horizontally(y, char_to_match, str_to_match)
+            or self.is_won_p_diagonally(x, y, char_to_match, str_to_match)
+            or self.is_won_n_diagonally(x, y, char_to_match, str_to_match)
         ):
-            print("Congrats, {}! You win!".format(to_match[0]))
+            print("Congrats, {}! You win!".format(char_to_match))
             return True
         return False
 
