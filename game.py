@@ -12,9 +12,9 @@ class Board:
             print("|" + "".join([x + "|" for x in row]))
 
     def is_won_vertically(self, x, y, to_match):
-        if self.height - y < 4:
-            return False
-        if to_match != "".join([self.board[y + i][x] for i in range(4)]):
+        if self.height - y < 4 or to_match != "".join(
+            [self.board[y + i][x] for i in range(4)]
+        ):
             return False
         for i in range(4):
             self.board[y + i][x] = to_match[0].upper()
