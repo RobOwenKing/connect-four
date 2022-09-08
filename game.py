@@ -96,7 +96,6 @@ class Board:
             if self.board[j][column - 1] == " ":
                 self.board[j][column - 1] = piece
                 self.last_placement = [column - 1, j]
-                """ self.print() """
                 return True
         raise ValueError("Error: Column {} is already full".format(column))
 
@@ -131,7 +130,6 @@ class Game:
     def handle_move(self, col):
         try:
             self.board.move(self.players[self.current_player], col)
-            self.board.print()
             self.current_player = 1 - self.current_player
             self.game_over = self.board.is_game_over()
         except Exception as e:
@@ -151,13 +149,14 @@ class Game:
         width = input("How many columns do you want (default 7): ") or 7
         height = input("How many rows do you want (default 6): ") or 6
         self.board = Board(width, height)
-        self.board.print()
         self.game_over = False
         while not self.game_over:
+            self.board.print()
             col = input(
                 "Pick a column, player {}: ".format(self.players[self.current_player])
             )
             self.handle_move(col)
+        self.board.print()
 
 
 def main():
