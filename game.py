@@ -16,6 +16,8 @@ class Board:
             return False
         if to_match != "".join([self.board[y + i][x] for i in range(4)]):
             return False
+        for i in range(4):
+            self.board[y + i][x] = to_match[0].upper()
         return True
 
     def is_won_horizontally(self, y, to_match):
