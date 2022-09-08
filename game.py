@@ -29,25 +29,38 @@ class Board:
         while start + i < self.width and self.board[y][start + i] == char_to_match:
             self.board[y][start + i] = char_to_match.upper()
             i += 1
-        self.print()
         return True
 
     def is_won_n_diagonally(self, x, y, char_to_match, str_to_match):
         min_i = -min(x, y)
         max_i = min(self.width - x, self.height - y)
-        if str_to_match not in "".join(
-            [self.board[y + i][x + i] for i in range(min_i, max_i)]
-        ):
+        row = "".join([self.board[y + i][x + i] for i in range(min_i, max_i)])
+        if str_to_match not in row:
             return False
+        start = min_i + row.find(str_to_match)
+        i = 0
+        while (
+            start + i < max_i
+            and self.board[y + start + i][x + start + i] == char_to_match
+        ):
+            self.board[y + start + i][x + start + i] = char_to_match.upper()
+            i += 1
         return True
 
     def is_won_p_diagonally(self, x, y, char_to_match, str_to_match):
         min_i = -min(x, self.height - y - 1)
         max_i = min(self.width - x, y + 1)
-        if str_to_match not in "".join(
-            [self.board[y - i][x + i] for i in range(min_i, max_i)]
-        ):
+        row = "".join([self.board[y - i][x + i] for i in range(min_i, max_i)])
+        if str_to_match not in row:
             return False
+        start = min_i + row.find(str_to_match)
+        i = 0
+        while (
+            start + i < max_i
+            and self.board[y + start - i][x + start + i] == char_to_match
+        ):
+            self.board[y + start - i][x + start + i] = char_to_match.upper()
+            i += 1
         return True
 
     def is_won(self):
