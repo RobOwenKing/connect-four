@@ -74,7 +74,7 @@ class Board:
             or self.is_won_p_diagonally(x, y, char_to_match, str_to_match)
             or self.is_won_n_diagonally(x, y, char_to_match, str_to_match)
         ):
-            print("Congrats, {}! You win!".format(char_to_match))
+            print(f"Congrats, {char_to_match}! You win!")
             return True
         return False
 
@@ -97,13 +97,13 @@ class Board:
                 self.board[j][column - 1] = piece
                 self.last_placement = [column - 1, j]
                 return True
-        raise ValueError("Error: Column {} is already full".format(column))
+        raise ValueError(f"Error: Column {column} is already full")
 
     def move(self, piece, column):
         if not piece in self.players:
-            raise ValueError("Error: {} is not a valid piece".format(piece))
+            raise ValueError(f"Error: {piece} is not a valid piece")
         if not int(column) in range(1, self.width + 1):
-            raise ValueError("Error: {} is not a valid column".format(column))
+            raise ValueError(f"Error: {column} is not a valid column")
         self.attempt_move(piece, int(column))
 
     # Helper methods
@@ -152,9 +152,7 @@ class Game:
         self.game_over = False
         while not self.game_over:
             self.board.print()
-            col = input(
-                "Pick a column, player {}: ".format(self.players[self.current_player])
-            )
+            col = input(f"Pick a column, player {self.players[self.current_player]}: ")
             self.handle_move(col)
         self.board.print()
 
