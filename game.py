@@ -11,51 +11,70 @@ class Board:
         for row in self.board:
             print("|" + "".join([x + "|" for x in row]))
 
-    def is_won_vertically(self, x, y, to_match):
-        if self.height - y < 4:
+    def is_won_vertically(self, x, y, char_to_match, str_to_match):
+        if self.height - y < 4 or str_to_match != "".join(
+            [self.board[y + i][x] for i in range(4)]
+        ):
             return False
-        if to_match != "".join([self.board[y + i][x] for i in range(4)]):
-            return False
-        print("Congrats, {}! You win!".format(to_match[0]))
+        for i in range(4):
+            self.board[y + i][x] = char_to_match.upper()
         return True
 
-    def is_won_horizontally(self, y, to_match):
-        if not to_match in "".join(self.board[y]):
+    def is_won_horizontally(self, y, char_to_match, str_to_match):
+        row = "".join(self.board[y])
+        if not str_to_match in row:
             return False
-        print("Congrats, {}! You win!".format(to_match[0]))
+        start = row.find(str_to_match)
+        i = 0
+        while start + i < self.width and self.board[y][start + i] == char_to_match:
+            self.board[y][start + i] = char_to_match.upper()
+            i += 1
         return True
 
-    def is_won_n_diagonally(self, x, y, to_match):
+    def is_won_n_diagonally(self, x, y, char_to_match, str_to_match):
         min_i = -min(x, y)
         max_i = min(self.width - x, self.height - y)
-        if to_match not in "".join(
-            [self.board[y + i][x + i] for i in range(min_i, max_i)]
-        ):
+        row = "".join([self.board[y + i][x + i] for i in range(min_i, max_i)])
+        if str_to_match not in row:
             return False
-        print("Congrats, {}! You win!".format(to_match[0]))
+        start = min_i + row.find(str_to_match)
+        i = 0
+        while (
+            start + i < max_i
+            and self.board[y + start + i][x + start + i] == char_to_match
+        ):
+            self.board[y + start + i][x + start + i] = char_to_match.upper()
+            i += 1
         return True
 
-    def is_won_p_diagonally(self, x, y, to_match):
+    def is_won_p_diagonally(self, x, y, char_to_match, str_to_match):
         min_i = -min(x, self.height - y - 1)
         max_i = min(self.width - x, y + 1)
-        if to_match not in "".join(
-            [self.board[y - i][x + i] for i in range(min_i, max_i)]
-        ):
+        row = "".join([self.board[y - i][x + i] for i in range(min_i, max_i)])
+        if str_to_match not in row:
             return False
-        print("Congrats, {}! You win!".format(to_match[0]))
+        start = min_i + row.find(str_to_match)
+        i = 0
+        while (
+            start + i < max_i
+            and self.board[y + start - i][x + start + i] == char_to_match
+        ):
+            self.board[y + start - i][x + start + i] = char_to_match.upper()
+            i += 1
         return True
 
     def is_won(self):
         x = self.last_placement[0]
         y = self.last_placement[1]
-        to_match = self.board[y][x] * 4
-        if self.is_won_vertically(x, y, to_match):
-            return True
-        elif self.is_won_horizontally(y, to_match):
-            return True
-        elif self.is_won_p_diagonally(x, y, to_match):
-            return True
-        elif self.is_won_n_diagonally(x, y, to_match):
+        char_to_match = self.board[y][x]
+        str_to_match = char_to_match * 4
+        if (
+            self.is_won_vertically(x, y, char_to_match, str_to_match)
+            or self.is_won_horizontally(y, char_to_match, str_to_match)
+            or self.is_won_p_diagonally(x, y, char_to_match, str_to_match)
+            or self.is_won_n_diagonally(x, y, char_to_match, str_to_match)
+        ):
+            print(f"Congrats, {char_to_match}! You win!")
             return True
         return False
 
@@ -77,15 +96,14 @@ class Board:
             if self.board[j][column - 1] == " ":
                 self.board[j][column - 1] = piece
                 self.last_placement = [column - 1, j]
-                """ self.print() """
                 return True
-        raise ValueError("Error: Column {} is already full".format(column))
+        raise ValueError(f"Error: Column {column} is already full")
 
     def move(self, piece, column):
         if not piece in self.players:
-            raise ValueError("Error: {} is not a valid piece".format(piece))
+            raise ValueError(f"Error: {piece} is not a valid piece")
         if not int(column) in range(1, self.width + 1):
-            raise ValueError("Error: {} is not a valid column".format(column))
+            raise ValueError(f"Error: {column} is not a valid column")
         self.attempt_move(piece, int(column))
 
     # Helper methods
@@ -112,7 +130,6 @@ class Game:
     def handle_move(self, col):
         try:
             self.board.move(self.players[self.current_player], col)
-            self.board.print()
             self.current_player = 1 - self.current_player
             self.game_over = self.board.is_game_over()
         except Exception as e:
@@ -132,17 +149,18 @@ class Game:
         width = input("How many columns do you want (default 7): ") or 7
         height = input("How many rows do you want (default 6): ") or 6
         self.board = Board(width, height)
-        self.board.print()
         self.game_over = False
         while not self.game_over:
-            col = input(
-                "Pick a column, player {}: ".format(self.players[self.current_player])
-            )
+            self.board.print()
+            col = input(f"Pick a column, player {self.players[self.current_player]}: ")
             self.handle_move(col)
+        self.board.print()
+
 
 def main():
     game = Game()
     game.start()
+
 
 if __name__ == "__main__":
     main()
